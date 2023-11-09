@@ -73,7 +73,7 @@ function calculate_entropy(calculator::TextEntropyCalculator, sentence::String)
         end
 
         p_combined = 0.5 * p_singlegram + 0.5 * p_bigram
-        println(p_combined)
+        # println(p_combined)
         if p_combined > 0
             entropy -= log(p_combined)
         else
