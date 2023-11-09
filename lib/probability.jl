@@ -1,20 +1,20 @@
 using TextAnalysis
 
 struct TextEntropyCalculator
-    bigrams::Dict{Tuple{String, String}, Int}
-    singlegrams::Dict{String, Int}
+    bigrams::Dict{Tuple{String,String},Int}
+    singlegrams::Dict{String,Int}
     total_bigrams::Int
     total_singlegrams::Int
 
     function TextEntropyCalculator(sentences::Vector{Vector{String}})
         print("Calculating bigrams and singlegrams...")
-        bigrams = Dict{Tuple{String, String}, Int}()
-        singlegrams = Dict{String, Int}()
+        bigrams = Dict{Tuple{String,String},Int}()
+        singlegrams = Dict{String,Int}()
 
         for words in sentences
             # 文の先頭と末尾に START と END を追加
-            for i in 1:length(words) - 1
-                bg = (words[i], words[i + 1])
+            for i in 1:length(words)-1
+                bg = (words[i], words[i+1])
                 bigrams[bg] = get(bigrams, bg, 0) + 1
 
                 # シングルグラムのカウント
@@ -36,11 +36,11 @@ struct TextEntropyCalculator
 end
 
 function create_grams(words::Vector{String})
-    bigrams = Dict{Tuple{String, String}, Int}()
-    singlegrams = Dict{String, Int}()
+    bigrams = Dict{Tuple{String,String},Int}()
+    singlegrams = Dict{String,Int}()
 
-    for i in 1:length(words) - 1
-        bg = (words[i], words[i + 1])
+    for i in 1:length(words)-1
+        bg = (words[i], words[i+1])
         bigrams[bg] = get(bigrams, bg, 0) + 1
         sg = words[i]
         singlegrams[sg] = get(singlegrams, sg, 0) + 1
@@ -52,10 +52,11 @@ end
 
 function calculate_entropy(calculator::TextEntropyCalculator, sentence::String)
     words = split("START " * sentence * " END")
+    word_bigram_entropies = []
     entropy = 0.0
 
-    for i in 2:length(words) - 1
-        bg = (words[i], words[i + 1])
+    for i in 2:length(words)-1
+        bg = (words[i], words[i+1])
         bg_count = get(calculator.bigrams, bg, 0)
         sg_count = get(calculator.singlegrams, words[i], 0)
         sg_count_before = get(calculator.singlegrams, words[i-1], 0)
@@ -73,6 +74,7 @@ function calculate_entropy(calculator::TextEntropyCalculator, sentence::String)
         end
 
         p_combined = 0.5 * p_singlegram + 0.5 * p_bigram
+        push!(word_bigram_entropies, ((words[i-1], words[i]), p_combined))
         # println(p_combined)
         if p_combined > 0
             entropy -= log(p_combined)
@@ -81,6 +83,6 @@ function calculate_entropy(calculator::TextEntropyCalculator, sentence::String)
         end
     end
 
-    return entropy / (length(words) - 1)
+    return entropy / (length(words) - 1), word_bigram_entropies
 end
 
