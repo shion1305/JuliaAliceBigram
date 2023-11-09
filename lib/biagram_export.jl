@@ -13,7 +13,7 @@ function generate_bigram_graph(bigram_data, filename)
     print(labels)
     # グラフを作成（サイズ、マージン、フォントサイズを調整）
     bar_plot = bar(labels, entropies, title="Bigram Entropies", xlabel="Bigrams", ylabel="Entropy",
-               legend=false, xrotation=45, xticks=(1:length(labels), labels), size=(800, 600), margin=5mm, xguidefontsize=10, yguidefontsize=10)
+        legend=false, xrotation=45, xticks=(1:length(labels), labels), size=(800, 600), margin=5mm, xguidefontsize=10, yguidefontsize=10)
 
     # グラフをファイルに保存（例：PNG形式）
     savefig(bar_plot, filename * ".png")
