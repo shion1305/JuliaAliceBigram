@@ -7,11 +7,13 @@ function calc_entropy(bigrams::Vector{Tuple{SubString{String},SubString{String}}
         count = get(bigram_counts, bigram, 0)  # バイグラムが存在しない場合、0を返す
         #         println(bigram, " ", count)
         #        append to entropy_details
-        push!(entropy_details, (bigram[1], bigram[2], count))
         probability = count / total_bigrams  # 確率を計算
         if -log(probability) == Inf
+
             continue
         end
+        e = -1 * log(probability)
+        push!(entropy_details, (bigram[1], bigram[2], e))
         cross_entropy -= log(probability)  # 負の対数を取り、加算
     end
     cross_entropy /= length(bigrams)
