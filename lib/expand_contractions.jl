@@ -43,6 +43,17 @@ contractions = Dict(
     "when’s" => "when is",
     "why’s" => "why is",
     "how’s" => "how is",
+    "there’s" => "there is",
+    "let’s" => "lets",
+    "you’d" => "you would",
+    "he’d" => "he would",
+    "she’d" => "she would",
+    "that’ll" => "that will",
+    "they’d" => "they would",
+    "i’d" => "i would",
+    "needn’t" => "need not",
+    "mayn’t" => "may not",
+    "shan’t" => "shall not",
 )
 
 
