@@ -51,7 +51,7 @@ function create_grams(words::Vector{String})
 end
 
 function calculate_entropy(calculator::TextEntropyCalculator, sentence::String)
-    words = split("START " * sentence * " END")
+    words = split(sentence)
     word_bigram_entropies = []
     entropy = 0.0
 
